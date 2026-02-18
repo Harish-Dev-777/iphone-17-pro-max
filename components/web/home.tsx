@@ -135,7 +135,7 @@ export default function Home() {
       {/* ─── Section 1: Hero ─── */}
       <section
         id="home"
-        className="relative w-full min-h-screen flex flex-col items-center justify-center bg-black overflow-hidden px-6"
+        className="relative w-full h-screen flex flex-col items-center justify-center bg-black overflow-hidden px-6"
       >
         <div className="z-20 w-full max-w-4xl mx-auto flex flex-col items-center justify-center text-center">
           <p className="text-white/40 font-sans text-xs md:text-sm tracking-[0.3em] uppercase mb-4 md:mb-6">
@@ -161,7 +161,7 @@ export default function Home() {
       {/* ─── Section 2: Design (LEFT) ─── */}
       <section
         id="design"
-        className="relative w-full min-h-screen flex flex-col items-center justify-center md:flex-row md:justify-start bg-[#0a0a0a] border-t border-white/5 overflow-hidden px-6 md:px-0 py-20 md:py-0"
+        className="relative w-full h-screen flex flex-col items-center justify-center md:flex-row md:justify-start bg-[#0a0a0a] border-t border-white/5 overflow-hidden px-6 md:px-0 py-20 md:py-0"
       >
         <div className="z-20 w-full md:w-1/2 md:pl-28 flex flex-col gap-6 md:gap-8 justify-center md:h-full items-center md:items-start text-center md:text-left">
           <p className="text-white/30 font-sans text-xs tracking-[0.3em] uppercase">
@@ -202,7 +202,7 @@ export default function Home() {
       {/* ─── Section 3: Display (RIGHT) ─── */}
       <section
         id="display"
-        className="relative w-full min-h-screen flex flex-col items-center justify-center md:flex-row md:justify-end bg-black border-t border-white/5 overflow-hidden px-6 md:px-0 py-20 md:py-0"
+        className="relative w-full h-screen flex flex-col items-center justify-center md:flex-row md:justify-end bg-black border-t border-white/5 overflow-hidden px-6 md:px-0 py-20 md:py-0"
       >
         <div className="z-20 w-full md:w-1/2 md:pr-28 flex flex-col gap-6 md:gap-8 justify-center md:h-full items-center md:items-start text-center md:text-left">
           <p className="text-white/30 font-sans text-xs tracking-[0.3em] uppercase">
@@ -243,7 +243,7 @@ export default function Home() {
       {/* ─── Section 4: Performance (LEFT) ─── */}
       <section
         id="performance"
-        className="relative w-full min-h-screen flex flex-col items-center justify-center md:flex-row md:justify-start bg-[#0a0a0a] border-t border-white/5 overflow-hidden px-6 md:px-0 py-20 md:py-0"
+        className="relative w-full h-screen flex flex-col items-center justify-center md:flex-row md:justify-start bg-[#0a0a0a] border-t border-white/5 overflow-hidden px-6 md:px-0 py-20 md:py-0"
       >
         <div className="z-20 w-full md:w-1/2 md:pl-28 flex flex-col gap-6 md:gap-8 justify-center md:h-full items-center md:items-start text-center md:text-left">
           <p className="text-white/30 font-sans text-xs tracking-[0.3em] uppercase">
@@ -279,7 +279,7 @@ export default function Home() {
       {/* ─── Section 5: CTA (RIGHT) ─── */}
       <section
         id="camera"
-        className="relative w-full min-h-screen flex flex-col items-center justify-center md:flex-row md:justify-end bg-black border-t border-white/5 overflow-hidden px-6 md:px-0 py-20 md:py-0"
+        className="relative w-full h-screen flex flex-col items-center justify-center md:flex-row md:justify-end bg-black border-t border-white/5 overflow-hidden px-6 md:px-0 py-20 md:py-0"
       >
         <div className="z-20 w-full md:w-1/2 md:pr-28 flex flex-col gap-6 md:gap-10 justify-center md:h-full items-center md:items-start text-center md:text-left">
           <p className="text-white/30 font-sans text-xs tracking-[0.3em] uppercase">

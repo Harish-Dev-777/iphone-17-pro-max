@@ -154,7 +154,7 @@ const Nav = () => {
                   ref={(el) => {
                     linksRef.current[idx] = el;
                   }}
-                  className="block font-poppins font-black text-[12vw] sm:text-[8vw] md:text-[6.5vw] leading-[1.05] text-white/20 hover:text-white transition-all duration-300 translate-y-[100%] opacity-0 group-hover:pl-4 will-change-transform"
+                  className="block font-poppins font-black text-[12vw] sm:text-[8vw] md:text-[6.5vw] leading-[1.05] text-white md:text-white/30 hover:text-white transition-all duration-300 translate-y-[100%] opacity-0 group-hover:pl-4 will-change-transform"
                 >
                   {link.name}
                 </a>
