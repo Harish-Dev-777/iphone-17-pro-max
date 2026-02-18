@@ -9,9 +9,9 @@ import * as THREE from "three";
 // Section keyframes for DESKTOP (md+):
 // S1: Vertical portrait — front face, upright
 const SECTION_KEYFRAMES_DESKTOP = [
-  { rotY: 0, rotX: -5, rotZ: 1.5, posY: -2 }, // S1: portrait, front face
-  { rotY: Math.PI * 1, rotX: 0, rotZ: 0, posY: 0 }, // S2: angled back+side
-  { rotY: Math.PI * 2.5, rotX: 0, rotZ: 0, posY: 0 }, // S3: front display
+  { rotY: 2, rotX: 0, rotZ: 0, posY: 0 }, // S1: portrait, front face
+  { rotY: Math.PI * 1.3, rotX: 0.1, rotZ: 0, posY: 0 }, // S2: angled back+side
+  { rotY: Math.PI * 2.5, rotX: 0.0, rotZ: 0, posY: 0 }, // S3: front display
   { rotY: Math.PI * 2.5, rotX: 0.2, rotZ: 0, posY: -0.3 }, // S4: slight tilt
   { rotY: Math.PI * 1.75, rotX: 0.15, rotZ: 0, posY: 0 }, // S5: 3/4 premium angle
 ];
@@ -84,7 +84,6 @@ function AnimatedModel({ scrollProgress, isMobile }: SceneProps) {
     );
 
     // Responsive scaling based on viewport width
-    // On mobile, use a slightly larger scale so the landscape phone fills the canvas well
     const responsiveScale = isMobile
       ? Math.min(viewport.width * 0.55, 1.0)
       : Math.min(viewport.width * 0.4, 0.8);
