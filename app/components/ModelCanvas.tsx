@@ -6,10 +6,11 @@ import Scene from "@/components/web/Scene";
 
 interface ModelCanvasProps {
   scrollProgress: number;
+  isMobile: boolean;
 }
 
 const ModelCanvas = forwardRef<HTMLDivElement, ModelCanvasProps>(
-  ({ scrollProgress }, ref) => {
+  ({ scrollProgress, isMobile }, ref) => {
     return (
       <div
         ref={ref}
@@ -18,12 +19,13 @@ const ModelCanvas = forwardRef<HTMLDivElement, ModelCanvasProps>(
           top: 0,
           left: "50%",
           transform: "translateX(-50%)",
-          width: "100vw", // Full width on mobile
-          height: "100vh",
           zIndex: 10,
           pointerEvents: "none",
         }}
-        className="md:w-[50vw]" // Half width on desktop
+        className="
+          w-full h-[55vh]
+          md:w-[50vw] md:h-screen
+        "
       >
         <Canvas
           camera={{ position: [0, 0, 9], fov: 40 }}
@@ -32,7 +34,7 @@ const ModelCanvas = forwardRef<HTMLDivElement, ModelCanvasProps>(
           gl={{ antialias: true, alpha: true }}
         >
           <Suspense fallback={null}>
-            <Scene scrollProgress={scrollProgress} />
+            <Scene scrollProgress={scrollProgress} isMobile={isMobile} />
           </Suspense>
         </Canvas>
       </div>

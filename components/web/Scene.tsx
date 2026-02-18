@@ -6,14 +6,20 @@ import { Suspense, useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
-// Section keyframes: rotY, rotX, rotZ, posY
-// S1: Phone lying horizontal (landscape), charging port facing viewer
-// S2: Upright, angled back+side
-// S3: Upright, front display
-// S4: Upright, slight tilt
-// S5: Upright, 3/4 premium angle
-const SECTION_KEYFRAMES = [
-  { rotY: Math.PI / 2, rotX: 0.0, rotZ: Math.PI / 2, posY: 0 }, // S1: horizontal, power button side
+// Section keyframes for DESKTOP (md+):
+// S1: Horizontal landscape — power button / charge port side view
+const SECTION_KEYFRAMES_DESKTOP = [
+  { rotY: Math.PI / 2, rotX: 0.0, rotZ: Math.PI / 2, posY: 0 }, // S1: landscape, power button side
+  { rotY: Math.PI * 1.3, rotX: 0.1, rotZ: 0, posY: 0 }, // S2: angled back+side
+  { rotY: Math.PI * 2.5, rotX: 0.0, rotZ: 0, posY: 0 }, // S3: front display
+  { rotY: Math.PI * 2.5, rotX: 0.2, rotZ: 0, posY: -0.3 }, // S4: slight tilt
+  { rotY: Math.PI * 1.75, rotX: 0.15, rotZ: 0, posY: 0 }, // S5: 3/4 premium angle
+];
+
+// Section keyframes for MOBILE (<md):
+// S1: Vertical portrait — upright phone
+const SECTION_KEYFRAMES_MOBILE = [
+  { rotY: 0, rotX: 0.0, rotZ: 0, posY: 0 }, // S1: portrait, front face
   { rotY: Math.PI * 1.3, rotX: 0.1, rotZ: 0, posY: 0 }, // S2: angled back+side
   { rotY: Math.PI * 2.5, rotX: 0.0, rotZ: 0, posY: 0 }, // S3: front display
   { rotY: Math.PI * 2.5, rotX: 0.2, rotZ: 0, posY: -0.3 }, // S4: slight tilt
@@ -24,13 +30,16 @@ function lerp(a: number, b: number, t: number) {
   return a + (b - a) * t;
 }
 
-function getTargetFromProgress(progress: number) {
-  const totalSections = SECTION_KEYFRAMES.length - 1;
+function getTargetFromProgress(progress: number, isMobile: boolean) {
+  const keyframes = isMobile
+    ? SECTION_KEYFRAMES_MOBILE
+    : SECTION_KEYFRAMES_DESKTOP;
+  const totalSections = keyframes.length - 1;
   const scaled = progress * totalSections;
   const sectionIndex = Math.min(Math.floor(scaled), totalSections - 1);
   const t = scaled - sectionIndex;
-  const from = SECTION_KEYFRAMES[sectionIndex];
-  const to = SECTION_KEYFRAMES[sectionIndex + 1];
+  const from = keyframes[sectionIndex];
+  const to = keyframes[sectionIndex + 1];
   return {
     rotY: lerp(from.rotY, to.rotY, t),
     rotX: lerp(from.rotX, to.rotX, t),
@@ -41,15 +50,16 @@ function getTargetFromProgress(progress: number) {
 
 interface SceneProps {
   scrollProgress: number;
+  isMobile: boolean;
 }
 
-function AnimatedModel({ scrollProgress }: SceneProps) {
+function AnimatedModel({ scrollProgress, isMobile }: SceneProps) {
   const groupRef = useRef<THREE.Group>(null);
   const { viewport } = useThree();
 
   useFrame(() => {
     if (!groupRef.current) return;
-    const target = getTargetFromProgress(scrollProgress);
+    const target = getTargetFromProgress(scrollProgress, isMobile);
 
     // Smooth lerp toward target rotation
     groupRef.current.rotation.y = lerp(
@@ -74,8 +84,6 @@ function AnimatedModel({ scrollProgress }: SceneProps) {
     );
 
     // Responsive scaling based on viewport width
-    // iPhone is tall (~1.4 units high after Center).
-    // We want it to occupy about 60% of vertical height or fit width-wise.
     const responsiveScale = Math.min(viewport.width * 0.4, 0.8);
     groupRef.current.scale.setScalar(responsiveScale);
   });
@@ -87,7 +95,7 @@ function AnimatedModel({ scrollProgress }: SceneProps) {
   );
 }
 
-export default function Scene({ scrollProgress }: SceneProps) {
+export default function Scene({ scrollProgress, isMobile }: SceneProps) {
   return (
     <Suspense fallback={null}>
       {/* Soft white lighting only */}
@@ -105,7 +113,7 @@ export default function Scene({ scrollProgress }: SceneProps) {
       />
       <directionalLight position={[0, -4, 3]} intensity={0.3} color="#ffffff" />
 
-      <AnimatedModel scrollProgress={scrollProgress} />
+      <AnimatedModel scrollProgress={scrollProgress} isMobile={isMobile} />
 
       <Environment preset="city" />
 
