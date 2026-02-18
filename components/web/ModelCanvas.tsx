@@ -21,11 +21,15 @@ const ModelCanvas = forwardRef<HTMLDivElement, ModelCanvasProps>(
           transform: "translateX(-50%)",
           zIndex: 10,
           pointerEvents: "none",
+          // On mobile: full viewport coverage so the canvas is always 100vw × 100vh
+          width: isMobile ? "100vw" : undefined,
+          height: isMobile ? "100vh" : undefined,
         }}
-        className="
-          w-full h-[55vh]
-          md:w-[50vw] md:h-screen
-        "
+        className={
+          isMobile
+            ? "" // mobile: inline styles handle sizing
+            : "w-[50vw] h-screen" // desktop: half-width, full height
+        }
       >
         <Canvas
           camera={{ position: [0, 0, 9], fov: 40 }}
