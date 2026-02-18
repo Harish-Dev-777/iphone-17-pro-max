@@ -18,11 +18,12 @@ const ModelCanvas = forwardRef<HTMLDivElement, ModelCanvasProps>(
           top: 0,
           left: "50%",
           transform: "translateX(-50%)",
-          width: "100vw",
+          width: "100vw", // Full width on mobile
           height: "100vh",
           zIndex: 10,
           pointerEvents: "none",
         }}
+        className="md:w-[50vw]" // Half width on desktop
       >
         <Canvas
           camera={{ position: [0, 0, 9], fov: 40 }}

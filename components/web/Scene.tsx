@@ -3,7 +3,7 @@
 import { OrbitControls, Environment } from "@react-three/drei";
 import { Iphone } from "./iphone";
 import { Suspense, useRef } from "react";
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
 // Section keyframes: rotY, rotX, rotZ, posY
@@ -13,7 +13,7 @@ import * as THREE from "three";
 // S4: Upright, slight tilt
 // S5: Upright, 3/4 premium angle
 const SECTION_KEYFRAMES = [
-  { rotY: 0, rotX: Math.PI / 2, rotZ: 0, posY: 0 }, // S1: horizontal, charging port side
+  { rotY: Math.PI / 2, rotX: 0.0, rotZ: Math.PI / 2, posY: 0 }, // S1: horizontal, power button side
   { rotY: Math.PI * 1.3, rotX: 0.1, rotZ: 0, posY: 0 }, // S2: angled back+side
   { rotY: Math.PI * 2.5, rotX: 0.0, rotZ: 0, posY: 0 }, // S3: front display
   { rotY: Math.PI * 2.5, rotX: 0.2, rotZ: 0, posY: -0.3 }, // S4: slight tilt
@@ -45,10 +45,13 @@ interface SceneProps {
 
 function AnimatedModel({ scrollProgress }: SceneProps) {
   const groupRef = useRef<THREE.Group>(null);
+  const { viewport } = useThree();
 
   useFrame(() => {
     if (!groupRef.current) return;
     const target = getTargetFromProgress(scrollProgress);
+
+    // Smooth lerp toward target rotation
     groupRef.current.rotation.y = lerp(
       groupRef.current.rotation.y,
       target.rotY,
@@ -69,11 +72,17 @@ function AnimatedModel({ scrollProgress }: SceneProps) {
       target.posY,
       0.06,
     );
+
+    // Responsive scaling based on viewport width
+    // iPhone is tall (~1.4 units high after Center).
+    // We want it to occupy about 60% of vertical height or fit width-wise.
+    const responsiveScale = Math.min(viewport.width * 0.4, 0.8);
+    groupRef.current.scale.setScalar(responsiveScale);
   });
 
   return (
     <group ref={groupRef}>
-      <Iphone scale={0.8} position={[0, 0, 0]} />
+      <Iphone scale={1} position={[0, 0, 0]} />
     </group>
   );
 }
