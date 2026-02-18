@@ -113,7 +113,7 @@ export default function Footer() {
   return (
     <footer
       ref={footerRef}
-      className="relative w-full bg-[#080808] text-white border-t border-white/[0.06] overflow-hidden"
+      className="relative z-50 w-full bg-[#080808] text-white border-t border-white/[0.06] overflow-hidden"
     >
       {/* Subtle gradient glow top */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
